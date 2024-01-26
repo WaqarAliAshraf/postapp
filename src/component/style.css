@@ -1,0 +1,53 @@
+/* navbar css starts here */
+.navbar-brand .fa-solid{
+    color:#66BB81;
+    font-size: 40px;
+}
+p{
+    font-size: 22px;
+    font-weight: 500;
+}
+span{
+    color: #66BB81;
+}
+.nav-item{
+    font-weight: 700;
+    font-size: 20px;
+    margin-right: 20px;
+}
+.nav-buttons a{
+text-decoration: none;
+}
+.blog .fa-solid{
+    color:#66BB81;
+}
+.blog{
+    color: black;
+    font-weight: 700;
+    font-size: 18px;
+    margin-right: 20px;
+}
+.planner {
+    background-color: #66BB81;
+    padding: 10px 15px ;
+    border-radius: 30px;
+    color: white;
+}
+/* banner section */
+.banner-wrapper h1{
+font-size: 50px;
+font-weight: 700;
+}
+.banner-wrapper{
+    padding: 90px 0px;
+}
+.detail{
+    padding: 100px 0px;
+}
+.card{
+    padding: 20px 30px;
+}
+.card:hover{
+    background-color: #F6E0E3;
+}
+
