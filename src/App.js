@@ -4,7 +4,8 @@ import Navbar from "./component/navbar";
 import { Routes, Route } from "react-router-dom";
 import Banner from "./component/banner";
 import Blogdetail from "./component/blogdetail";
-// import PersonList from "./component/PersonalList";
+import FormHandle from "./component/FormHandle";
+
 
 function App() {
   return (
@@ -12,9 +13,10 @@ function App() {
       <Navbar/>
       <Routes>
         <Route path="/" element={<Banner/>} />
-        <Route path="/readmore/:id" element={<Blogdetail />} />
+        <Route path="/readmore/:id" element={<Blogdetail/>}/>
+        <Route path="/FormHandle" element={<FormHandle/>}/>
       </Routes>
-      {/* <PersonList/> */}
+      
     </div>
   );
 }

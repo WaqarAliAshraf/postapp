@@ -1,27 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {  useParams } from "react-router-dom";
-import data from "./data";
-
+import axios from "axios";
 const Blogdetail = () => {
-  let {id}=useParams();
-  const cardData=data.find(cardData=>String(cardData.id)===id);
+  const [posts, setPosts] = useState([]);
+  let {id}=useParams()
+
+  useEffect(() => {
+    const Data = async () => {
+        const result = await axios.get(
+            `https://jsonplaceholder.typicode.com/posts/${id}`
+          );
+        if (result.status === 200) {
+          const Posts = result.data;
+          setPosts(Posts);
+        } 
+    };
+
+    Data();
+  }, []); 
   return (
     <div className="detail">
       <div className="container">
         <div className="card">
           <div className="card-header">
-            {/* <h1>{state.key1.userId}</h1> */}
-            <h1>{cardData.title}</h1>
+            <h1>{posts.title}</h1>
           </div>
           <div className="card-body">
-            <h1>{cardData.body}</h1>
+            <h1>{posts.body}</h1>
           </div>
           <div className="card-footer">
-            <h1>{cardData.id}</h1>
+            <h1>{posts.id}</h1>
           </div>
         </div>
       </div>
     </div>
+    
   );
 };
 
