@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {  useParams } from "react-router-dom";
+import {  Link, useParams } from "react-router-dom";
 import axios from "axios";
 const Blogdetail = () => {
   const [posts, setPosts] = useState([]);
@@ -30,6 +30,7 @@ const Blogdetail = () => {
           </div>
           <div className="card-footer">
             <h1>{posts.id}</h1>
+            <Link to="/" className="planner">Back</Link>
           </div>
         </div>
       </div>

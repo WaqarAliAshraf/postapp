@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams} from "react-router-dom";
 
 const PersonList = () => {
   const [posts, setPosts] = useState([]);
@@ -25,7 +25,6 @@ const PersonList = () => {
         setLoading(false);
       }
     };
-
     Data();
   }, []);
 
@@ -43,7 +42,7 @@ const PersonList = () => {
 
   return (
     <div className="container">
-     <Link to="/FormHandle">
+     <Link to="/FormHandle" className="planner">
       Add Post
     </Link>
       {loading ? (
@@ -66,19 +65,19 @@ const PersonList = () => {
             <div className="card-body">
               <p>
                 {items.body}{" "}
-                <span>
-                  <Link to={`/readmore/${items.id}`}>Read more</Link>
-                </span>
+               
               </p>
               <button
                 type="button"
-                className="btn btn-primary"
+                className="planner"
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
               >
                 Delete
               </button>
-
+              <span>
+                  <Link to={`/readmore/${items.id}`} className="planner">Read more</Link>
+                </span>
               <div
                 className="modal fade"
                 id="exampleModal"

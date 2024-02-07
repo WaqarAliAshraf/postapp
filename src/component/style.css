@@ -32,6 +32,12 @@ text-decoration: none;
     padding: 10px 15px ;
     border-radius: 30px;
     color: white;
+    text-decoration: none;
+    border: none;
+    margin-right: 10px;
+}
+button{
+    line-height: normal;
 }
 /* banner section */
 .banner-wrapper h1{
@@ -50,4 +56,5 @@ font-weight: 700;
 .card:hover{
     background-color: #F6E0E3;
 }
+
 

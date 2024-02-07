@@ -1,13 +1,31 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
-const FormHandle = (setPosts) => {
-  const [showAddForm, setShowAddForm] = useState(false);
+const FormHandle = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+  const[id,setId]=useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (title.length>5) {
+      alert("Must be 5 Characters")
+      return
+    }
+    if (body.length>500) {
+      alert("Maximum Characters will 500")
+      return
+    }
+    if (id.length<0) {
+      alert(" Id Numbers must be Positive")
+      return
+    }
+    else{
+      alert("Form Submitted Successfully")
+    }
+
 
     try {
       const response = await axios.post(
@@ -18,32 +36,21 @@ const FormHandle = (setPosts) => {
           userId: 1,
         }
       );
-
-      const newPost = response.data;
-      handlePostAdded(newPost);
-      setTitle("");
-      setBody("");
+      
+      if (response.status === 200) {
+        setTitle("");
+        setBody("");
+        setId("");
+      } 
     } catch (error) {
       console.error("Error adding post:", error.message);
     }
   };
 
-  const handlePostAdded = (newPost) => {
-    setPosts((prevPosts) => [newPost, ...prevPosts]);
-    setShowAddForm(false);
-    console.log(newPost);
-  };
-
   return (
     <div className="container">
-      <button
-        type="button"
-        className="btn btn-primary mt-3"
-        onClick={() => setShowAddForm(true)}
-      >
-        Add New Post
-      </button>
-      {showAddForm && (
+    
+      { (
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="title" className="form-label">
@@ -59,7 +66,7 @@ const FormHandle = (setPosts) => {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="body" className="form-label">
+            <label  className="form-label">
               Body
             </label>
             <textarea
@@ -69,10 +76,20 @@ const FormHandle = (setPosts) => {
               onChange={(e) => setBody(e.target.value)}
               required
             />
+           
           </div>
-          <button type="submit" className="btn btn-primary">
+          <div className="mb-3">
+          <label>
+              id
+            </label>
+            <input type="text"  className="form-control" value={id}
+            onChange={(e)=> setId(e.target.value)}
+            required />
+          </div>
+          <button type="submit" className="planner">
             Add Post
           </button>
+          <Link to="/" className="planner">Back</Link>
         </form>
       )}
     </div>
