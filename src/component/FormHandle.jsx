@@ -1,32 +1,47 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const FormHandle = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const[id,setId]=useState("");
+  const [id, setId] = useState("");
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(true); 
+
+  useEffect(() => {
+   
+     setTimeout(() => {
+      setLoading(false); 
+    }, 1000);
+
+    
+  }, []); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    if (title.length>5) {
-      alert("Must be 5 Characters")
-      return
+    const errors = {};
+  
+    if (title.length < 5) {
+      errors.title = "Title must be at least 5 characters";
     }
-    if (body.length>500) {
-      alert("Maximum Characters will 500")
-      return
+  
+    if (body.length > 500) {
+      errors.body = "Maximum 500 characters";
     }
-    if (id.length<0) {
-      alert(" Id Numbers must be Positive")
-      return
+  
+    if (parseInt(id) <= 0) {
+      errors.id = "ID must be a positive number";
     }
-    else{
-      alert("Form Submitted Successfully")
+  
+    if (Object.keys(errors).length > 0) {
+      setErrors(errors);
+      setLoading(false);
+      return;
     }
-
-
+  
     try {
       const response = await axios.post(
         "https://jsonplaceholder.typicode.com/posts",
@@ -36,21 +51,31 @@ const FormHandle = () => {
           userId: 1,
         }
       );
-      
-      if (response.status === 200) {
+  
+      if (response.status === 201) {
+        console.log("Post added successfully:", response.data);
         setTitle("");
         setBody("");
         setId("");
-      } 
+      }
     } catch (error) {
       console.error("Error adding post:", error.message);
     }
+
+    setLoading(false); 
   };
 
   return (
     <div className="container">
-    
-      { (
+      {loading ? (
+        <div className="d-flex justify-content-center">
+          <div
+            className="spinner-border"
+            role="status"
+            style={{ width: 200, height: 200, color: "#66BB81" }}
+          ></div>
+        </div>
+      ) : (
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="title" className="form-label">
@@ -64,6 +89,7 @@ const FormHandle = () => {
               onChange={(e) => setTitle(e.target.value)}
               required
             />
+             {errors.title && <div className="text-danger">{errors.title}</div>}
           </div>
           <div className="mb-3">
             <label  className="form-label">
@@ -75,8 +101,9 @@ const FormHandle = () => {
               value={body}
               onChange={(e) => setBody(e.target.value)}
               required
-            />
+              />
            
+              {errors.body && <div className="text-danger">{errors.body}</div>}
           </div>
           <div className="mb-3">
           <label>
@@ -86,6 +113,7 @@ const FormHandle = () => {
             onChange={(e)=> setId(e.target.value)}
             required />
           </div>
+          {errors.id && <div className="text-danger">{errors.id}</div>}
           <button type="submit" className="planner">
             Add Post
           </button>

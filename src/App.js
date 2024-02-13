@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import Banner from "./component/banner";
 import Blogdetail from "./component/blogdetail";
 import FormHandle from "./component/FormHandle";
+import EditPost from "./component/EditPost";
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={<Banner/>} />
         <Route path="/readmore/:id" element={<Blogdetail/>}/>
         <Route path="/FormHandle" element={<FormHandle/>}/>
+        <Route path="/edit/:id" element={<EditPost/>}/>
       </Routes>
       
     </div>

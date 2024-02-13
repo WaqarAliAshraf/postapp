@@ -1,41 +1,65 @@
 import React, { useEffect, useState } from "react";
-import {  Link, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+
 const Blogdetail = () => {
-  const [posts, setPosts] = useState([]);
-  let {id}=useParams()
+  const [post, setPost] = useState({});
+  const [loading, setLoading] = useState(true);
+  const { id } = useParams();
 
   useEffect(() => {
     const Data = async () => {
-        const result = await axios.get(
-            `https://jsonplaceholder.typicode.com/posts/${id}`
-          );
-        if (result.status === 200) {
-          const Posts = result.data;
-          setPosts(Posts);
-        } 
+      try {
+        setLoading(true); 
+        const response = await axios.get(`https://jsonplaceholder.typicode.com/posts/${id}`);
+        if (response.status === 200) {
+          setPost(response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false); 
+      }
     };
 
     Data();
-  }, []); 
+
+   
+    return () => {
+      setLoading(false);
+    };
+  }, [id]);
+
   return (
     <div className="detail">
-      <div className="container">
-        <div className="card">
-          <div className="card-header">
-            <h1>{posts.title}</h1>
-          </div>
-          <div className="card-body">
-            <h1>{posts.body}</h1>
-          </div>
-          <div className="card-footer">
-            <h1>{posts.id}</h1>
-            <Link to="/" className="planner">Back</Link>
+      {loading ? (
+        <div className="d-flex justify-content-center">
+          <div
+            className="spinner-border"
+            role="status"
+            style={{ width: 200, height: 200, color: "#66BB81" }}
+          ></div>
+        </div>
+      ) : (
+        <div className="container">
+          <div className="card">
+            <div className="card-header">
+              <h1>{post.title}</h1>
+            </div>
+            <div className="card-body">
+              <p>{post.body}</p>
+            </div>
+            <div className="card-footer">
+              <p>Post ID: {post.id}</p>
+              <Link to="/" className="planner">Back</Link>
+              <Link to="/FormHandle" className="planner">
+      Add Post
+    </Link>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
-    
   );
 };
 

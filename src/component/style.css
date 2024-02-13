@@ -56,5 +56,8 @@ font-weight: 700;
 .card:hover{
     background-color: #F6E0E3;
 }
+.card{
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+}
 
 
